@@ -1,0 +1,16 @@
+<section class="list-box">
+  <div class="top-bar">
+    <h2>Lista de Corpos Celestes</h2>
+    <a routerLink="/admin/form" class="btn">Novo</a>
+  </div>
+  @if(successMessage){
+    <div class="success-message">
+      {{ successMessage }}
+    </div>
+  }
+  @if(errorMessage){
+    <div class="error-message">
+      {{ errorMessage }}
+    </div>
+  }
+</section>

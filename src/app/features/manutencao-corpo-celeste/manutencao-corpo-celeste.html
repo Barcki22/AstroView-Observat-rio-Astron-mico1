@@ -1,1 +1,97 @@
-<p>manutencao-corpo-celeste works!</p>
+<div class="form-container">
+  <div class="form-box">
+    <h2>
+      @if (corpoCelesteId !== null) {
+        Editar Corpo Celeste
+      } @else {
+        Adicionar Corpo Celeste
+      }
+    </h2>
+
+    @if (loading) {
+      <div class="info-message">
+        Carregando dados do corpo celeste...
+      </div>
+    }
+
+    @if (successMessage) {
+      <div class="successMessage">
+        {{ successMessage }}
+      </div>
+    }
+    
+    @if (errorMessage) {
+      <div class="errorMessage">
+        {{ errorMessage }}
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-group">
+        <label for="name">Nome</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          placeholder="Digite o nome do corpo celeste"
+        />
+        @if (form.controls['name'].touched && form.controls['name'].invalid) {
+          <small class="error-text">Informe um nome válido</small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="type">Tipo</label>
+        <input
+          id="type"
+          type="text"
+          formControlName="type"
+          placeholder="Ex: Planeta, Estrela, Galáxia"
+        />
+        @if (form.controls['type'].touched && form.controls['type'].invalid) {
+          <small class="error-text">Informe um tipo com no mínimo 3 caracteres</small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="description">Descrição</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="4"
+          placeholder="Digite a descrição detalhada"
+        ></textarea>
+        @if (form.controls['description'].touched && form.controls['description'].invalid) {
+          <small class="error-text">Informe uma descrição com no mínimo 10 caracteres</small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="distanceFromEarth">Distância da Terra (Anos-luz)</label>
+        <input
+          id="distanceFromEarth"
+          type="number"
+          step="0.01"
+          formControlName="distanceFromEarth"
+          placeholder="0.00"
+        />
+        @if (form.controls['distanceFromEarth'].touched && form.controls['distanceFromEarth'].invalid) {
+          <small class="error-text">Informe uma distância válida maior ou igual a zero</small>
+        }
+      </div>
+
+      <div class="form-actions">
+        <a routerLink="/admin" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-primary" [disabled]="saving || loading">
+          @if (saving) {
+            Salvando...
+          } @else if (corpoCelesteId !== null) {
+            Atualizar
+          } @else {
+            Salvar
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

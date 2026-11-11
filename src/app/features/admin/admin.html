@@ -1,16 +1,45 @@
+<h1>Administração de Corpos Celestes</h1>
 <section class="list-box">
   <div class="top-bar">
     <h2>Lista de Corpos Celestes</h2>
-    <a routerLink="/admin/form" class="btn">Novo</a>
+    <a routerLink="/manutencao-corpo-celeste" class="btn">Novo</a>
   </div>
-  @if(successMessage){
-    <div class="success-message">
-      {{ successMessage }}
+
+  @if (successMessage) {
+    <div class="suc">{{ successMessage }}</div>
+  }
+
+  @if (errorMessage) {
+    <div class="error">{{ errorMessage }}</div>
+  }
+
+  @if (loading()) {
+    <div class="loading">
+      <p>Carregando Corpos Celestes...</p>
     </div>
   }
-  @if(errorMessage){
-    <div class="error-message">
-      {{ errorMessage }}
+
+  @if (!loading() && corposCelestes().length === 0) {
+    <div class="empty-state">
+      <p>Nenhum corpo celeste encontrado</p>
     </div>
   }
+
+  <div class="cursos-grid">
+    @for (corpo of corposCelestes(); track corpo.id) {
+      <div class="cursos-item">
+        <h3>{{ corpo.nome }}</h3>
+        <p>{{ corpo.descricao }}</p>
+        <p>{{ corpo.tipo }}</p>
+        <div class="actions">
+          <button type="button" class="btn-edit" (click)="edit(corpo.id)">
+            Editar
+          </button>
+          <button type="button" class="btn-delete" (click)="remove(corpo.id)">
+            Excluir
+          </button>
+        </div>
+      </div>
+    }
+  </div>
 </section>
